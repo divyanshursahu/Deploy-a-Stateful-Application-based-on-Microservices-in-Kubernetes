@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: emp-deployment
+    labels:
+      app: emp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emp-deployment
+  template:
+    metadata:
+      labels:
+        app: emp-deployment
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: emp
+        image: veveritaengineering/emp:1.0.0
+        env:
+        - name: MONGO_SERVER
+          value: mongo-service
+        - name: MONGO_PORT
+          value: '27017'
+        - name: MONGO_DB
+          value: employees
+        - name: MONGO_USERNAME
+          value: mongoadmin
+        - name: MONGO_PASSWORD
+          value: secret
+        
