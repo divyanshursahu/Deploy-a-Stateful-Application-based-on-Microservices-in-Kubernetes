@@ -26,8 +26,18 @@ spec:
           value: '27017'
         - name: MONGO_DB
           value: employees
+        # - name: MONGO_USERNAME
+        #   value: mongoadmin
+        # - name: MONGO_PASSWORD
+        #   value: secret
         - name: MONGO_USERNAME
-          value: mongoadmin
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: username
         - name: MONGO_PASSWORD
-          value: secret
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: password
         

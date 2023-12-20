@@ -14,14 +14,32 @@ spec:
       labels:
         app: mongo-deployment
     spec:
+      volumes:
+        - name: pv-storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
       containers:
       - name: mongo
-        image: mongo:6.0.3 
+        image: mongo:6.0.3
+        volumeMounts:
+          - mountPath: "/data/db"
+            name: pv-storage
         env:
+        # - name: MONGO_INITDB_ROOT_USERNAME
+        #   value: mongoadmin
+        # - name: MONGO_INITDB_ROOT_PASSWORD
+        #   value: secret
         - name: MONGO_INITDB_ROOT_USERNAME
-          value: mongoadmin
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: username
         - name: MONGO_INITDB_ROOT_PASSWORD
-          value: secret
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: password
+        
 
 
 # kubectl exec <POD NAME> -- printenv

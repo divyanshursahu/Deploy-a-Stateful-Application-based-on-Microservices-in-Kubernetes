@@ -13,3 +13,6 @@ spec:
     app: mongo-deployment
 
 # kubectl expose deployment mongo-deployment --name=mongo-service --type=ClusterIP --port=27017 --dry-run=client -o yaml > k8s-mongo-service.yaml
+
+
+# kubectl expose deployment emp-deployment --name=emp-lb-service --type=LoadBalancer --port=8080 --dry-run=client -o yaml > k8s-emp-lb-service.yaml
